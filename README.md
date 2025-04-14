@@ -1,4 +1,4 @@
-# 🛡️ Proposal: Camp Access Management System (CAMS)
+# 🛡️Camp Access Management System (CAMS)
 
 **End-to-End Security, Access Control & Logistics for Police Camps**
 
@@ -41,7 +41,7 @@
 - **Frontend**: Vue.js / Blade (customizable)
 - **Database**: MySQL / MariaDB
 - **RFID Integration**: Compatible with long-range UHF RFID readers
-- **Security**: Role-based access, 2FA (optional), encrypted data
+- **Security**:2FA (optional), encrypted data
 
 ---
 
