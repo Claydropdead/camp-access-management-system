@@ -12,9 +12,15 @@ Route::get('/', function () {
 Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('dashboard');
+    })->name('admin.dashboard');
+    
+    Route::get('/admin/visitors', [BookingController::class, 'adminIndex'])->name('admin.visitors');
+    Route::post('/admin/visitors/{id}/action', [BookingController::class, 'adminAction'])->name('admin.visitors.action');
+    Route::post('/admin/visitors/bulk-action', [BookingController::class, 'bulkAction'])->name('admin.visitors.bulk-action');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

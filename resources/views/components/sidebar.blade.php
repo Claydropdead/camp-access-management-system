@@ -13,28 +13,34 @@
         <p>{{ Auth::user()->name ?? 'User' }}</p>
     </div>
     <nav class="drawer-nav">
-        <a href="{{ route('dashboard') }}" class="nav-link{{ request()->routeIs('dashboard') ? ' active' : '' }}">
+        <a href="{{ route('admin.dashboard') }}" class="nav-link{{ request()->routeIs('admin.dashboard') ? ' active' : '' }}">
             <i class="material-icons">dashboard</i>
             <span>Dashboard</span>
         </a>
         
         <!-- Visitor Management Module -->
-        <div class="nav-item-with-submenu{{ request()->is('visitor*') ? ' active' : '' }}">
+        <div class="nav-item-with-submenu{{ request()->is('admin/visitors*') || request()->is('visitor*') ? ' active' : '' }}">
             <div class="nav-item-header">
                 <i class="material-icons">supervisor_account</i>
                 <span>Visitor Management</span>
                 <i class="material-icons submenu-toggle">expand_more</i>
             </div>
             <div class="submenu">
-                <a href="{{ route('dashboard') }}#visitor-registration" class="nav-link submenu-item{{ request()->is('visitor/registration*') ? ' active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}#visitor-registration" class="nav-link submenu-item{{ request()->is('visitor/registration*') ? ' active' : '' }}">
                     <i class="material-icons">how_to_reg</i>
                     <span>Registration</span>
                 </a>
-                <a href="{{ route('dashboard') }}#visitor-approval" class="nav-link submenu-item{{ request()->is('visitor/approval*') ? ' active' : '' }}">
+                <a href="{{ route('admin.visitors') }}" class="nav-link submenu-item{{ request()->routeIs('admin.visitors') ? ' active' : '' }}">
                     <i class="material-icons">thumb_up_alt</i>
-                    <span>Approvals</span>
+                    <span>Visitor Approvals</span>
+                    @php
+                        $pendingCount = \App\Models\VisitorRegistration::where('status', 'pending')->count();
+                    @endphp
+                    @if($pendingCount > 0)
+                        <span class="notification-badge">{{ $pendingCount }}</span>
+                    @endif
                 </a>
-                <a href="{{ route('dashboard') }}#visitor-logs" class="nav-link submenu-item{{ request()->is('visitor/logs*') ? ' active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}#visitor-logs" class="nav-link submenu-item{{ request()->is('visitor/logs*') ? ' active' : '' }}">
                     <i class="material-icons">history</i>
                     <span>Visitor Logs</span>
                 </a>

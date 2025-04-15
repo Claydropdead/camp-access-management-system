@@ -183,7 +183,7 @@
                                     
                                     <div class="input-field col s12 m6">
                                         <i class="material-icons prefix">badge</i>
-                                        <select id="id" name="id" class="validate @error('id') invalid @enderror" required>
+                                        <select id="id" name="id" class="validate @error('id') invalid @enderror">
                                             <option value="" disabled {{ old('id') ? '' : 'selected' }}>Select ID Type</option>
                                             <option value="Philippine Passport" {{ old('id') == 'Philippine Passport' ? 'selected' : '' }}>Philippine Passport</option>
                                             <option value="Philippine National ID" {{ old('id') == 'Philippine National ID' ? 'selected' : '' }}>Philippine National ID</option>
@@ -593,6 +593,18 @@
                     }
                 });
             }
+
+            // Add form validation for ID Type
+            const form = document.querySelector('form[action="{{ route('booking.store') }}"]');
+            form.addEventListener('submit', function(e) {
+                const idType = document.getElementById('id');
+                if (!idType.value) {
+                    M.toast({html: 'Please select an ID Type!', classes: 'red'});
+                    idType.focus();
+                    e.preventDefault();
+                    return false;
+                }
+            });
         });
     </script>
     @section('scripts')

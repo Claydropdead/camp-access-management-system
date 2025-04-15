@@ -13,7 +13,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Dashboard CSS - direct link -->
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
-</head>
+    <!-- Page specific styles -->
+    @yield('styles')
+</head> 
 <body>
     <div class="app-layout">
         @include('components.sidebar')
