@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <!-- Styles -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Dashboard CSS - direct link -->
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <!-- Page specific styles -->

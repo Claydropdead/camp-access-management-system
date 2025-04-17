@@ -3,7 +3,7 @@
         <i class="material-icons">menu</i>
     </button>
     <div style="flex:1"></div>
-    @if(request()->route()->getName() == 'dashboard')
+    <!-- Always show the theme toggle regardless of route -->
     <div class="theme-switch-wrapper" style="margin-left:auto;">
         <span class="material-icons" style="color: white;">wb_sunny</span>
         <label class="theme-switch">
@@ -12,5 +12,4 @@
         </label>
         <span class="material-icons" style="color: white;">nightlight_round</span>
     </div>
-    @endif
 </header>

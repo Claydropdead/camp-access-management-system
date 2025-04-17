@@ -45,176 +45,178 @@
                 </button>
             </div>
             
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th class="checkbox-cell">
-                            <div class="checkbox-container">
-                                <div class="checkbox" id="select-all-checkbox">
-                                    <input type="checkbox" id="select-all">
+            <div class="responsive-table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="checkbox-cell">
+                                <div class="checkbox-container">
+                                    <div class="checkbox" id="select-all-checkbox">
+                                        <input type="checkbox" id="select-all">
+                                    </div>
                                 </div>
-                            </div>
-                        </th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Purpose</th>
-                        <th>Visit Date</th>
-                        <th>Contact Person</th>
-                        <th>Office</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @forelse($registrations as $reg)
-                    <tr data-id="{{ $reg->id }}" class="data-row">
-                        <td class="checkbox-cell">
-                            <div class="checkbox-container">
+                            </th>
+                            <th class="th-name">Name</th>
+                            <th class="th-email">Email</th>
+                            <th class="th-contact">Contact</th>
+                            <th class="th-purpose">Purpose</th>
+                            <th class="th-date">Visit Date</th>
+                            <th class="th-person">Contact Person</th>
+                            <th class="th-office">Office</th>
+                            <th class="th-status">Status</th>
+                            <th class="th-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($registrations as $reg)
+                        <tr data-id="{{ $reg->id }}" class="data-row">
+                            <td class="checkbox-cell">
+                                <div class="checkbox-container">
+                                    @if($reg->status === 'pending')
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="selected_ids[]" value="{{ $reg->id }}" class="row-checkbox">
+                                    </div>
+                                    @endif
+                                </div>
+                            </td>
+                            <td data-label="Name">{{ $reg->name }}</td>
+                            <td data-label="Email">{{ $reg->email }}</td>
+                            <td data-label="Contact">{{ $reg->contact_number }}</td>
+                            <td data-label="Purpose">
+                                <div class="expandable-text" title="{{ $reg->purpose }}">{{ Str::limit($reg->purpose, 30) }}</div>
+                            </td>
+                            <td data-label="Visit Date">{{ $reg->visit_date }}</td>
+                            <td data-label="Contact Person">{{ $reg->contact_person }}</td>
+                            <td data-label="Office">{{ $reg->office }}</td>
+                            <td data-label="Status">
                                 @if($reg->status === 'pending')
-                                <div class="checkbox">
-                                    <input type="checkbox" name="selected_ids[]" value="{{ $reg->id }}" class="row-checkbox">
-                                </div>
+                                    <span class="status-badge status-pending">Pending</span>
+                                @elseif($reg->status === 'approved')
+                                    <span class="status-badge status-approved">Approved</span>
+                                @elseif($reg->status === 'rejected')
+                                    <span class="status-badge status-rejected">Rejected</span>
                                 @endif
-                            </div>
-                        </td>
-                        <td>{{ $reg->name }}</td>
-                        <td>{{ $reg->email }}</td>
-                        <td>{{ $reg->contact_number }}</td>
-                        <td>
-                            <div class="expandable-text" title="{{ $reg->purpose }}">{{ Str::limit($reg->purpose, 30) }}</div>
-                        </td>
-                        <td>{{ $reg->visit_date }}</td>
-                        <td>{{ $reg->contact_person }}</td>
-                        <td>{{ $reg->office }}</td>
-                        <td>
-                            @if($reg->status === 'pending')
-                                <span class="status-badge status-pending">Pending</span>
-                            @elseif($reg->status === 'approved')
-                                <span class="status-badge status-approved">Approved</span>
-                            @elseif($reg->status === 'rejected')
-                                <span class="status-badge status-rejected">Rejected</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($reg->status === 'pending')
-                            <div style="display: flex; gap: 4px;">
-                                <form action="{{ route('admin.visitors.action', $reg->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    <input type="hidden" name="action" value="approve">
-                                    <button type="submit" class="action-button" title="Approve" onclick="return confirm('Approve this registration?')">
-                                        <i class="material-icons approve-icon">check_circle</i>
+                            </td>
+                            <td data-label="Actions">
+                                @if($reg->status === 'pending')
+                                <div class="action-buttons-container">
+                                    <form action="{{ route('admin.visitors.action', $reg->id) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        <input type="hidden" name="action" value="approve">
+                                        <button type="submit" class="action-button" title="Approve" onclick="return confirm('Approve this registration?')">
+                                            <i class="material-icons approve-icon">check_circle</i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('admin.visitors.action', $reg->id) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        <input type="hidden" name="action" value="reject">
+                                        <button type="submit" class="action-button" title="Reject" onclick="return confirm('Reject this registration?')">
+                                            <i class="material-icons reject-icon">cancel</i>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="action-button toggle-details" title="View Details">
+                                        <i class="material-icons">visibility</i>
                                     </button>
-                                </form>
-                                <form action="{{ route('admin.visitors.action', $reg->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    <input type="hidden" name="action" value="reject">
-                                    <button type="submit" class="action-button" title="Reject" onclick="return confirm('Reject this registration?')">
-                                        <i class="material-icons reject-icon">cancel</i>
-                                    </button>
-                                </form>
+                                </div>
+                                @else
                                 <button type="button" class="action-button toggle-details" title="View Details">
                                     <i class="material-icons">visibility</i>
                                 </button>
-                            </div>
-                            @else
-                            <button type="button" class="action-button toggle-details" title="View Details">
-                                <i class="material-icons">visibility</i>
-                            </button>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr class="expandable-row-content" style="display: none;">
-                        <td colspan="10">
-                            <div class="expandable-content">
-                                <div class="info-section">
-                                    <div class="info-section-title">Visit Purpose</div>
-                                    <p>{{ $reg->purpose }}</p>
-                                </div>
-                                
-                                <div class="info-section">
-                                    <div class="info-section-title">ID Information</div>
-                                    <p><strong>ID Type:</strong> {{ $reg->id_type }}</p>
-                                    @if($reg->id_picture)
-                                    <p>
-                                        <a href="{{ asset('storage/id_pictures/' . $reg->id_picture) }}" target="_blank">
-                                            View ID Picture
-                                        </a>
-                                    </p>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr class="expandable-row-content" style="display: none;">
+                            <td colspan="10">
+                                <div class="expandable-content">
+                                    <div class="info-section">
+                                        <div class="info-section-title">Visit Purpose</div>
+                                        <p>{{ $reg->purpose }}</p>
+                                    </div>
+                                    
+                                    <div class="info-section">
+                                        <div class="info-section-title">ID Information</div>
+                                        <p><strong>ID Type:</strong> {{ $reg->id_type }}</p>
+                                        @if($reg->id_picture)
+                                        <p>
+                                            <a href="{{ asset('storage/id_pictures/' . $reg->id_picture) }}" target="_blank">
+                                                View ID Picture
+                                            </a>
+                                        </p>
+                                        @endif
+                                    </div>
+                                    
+                                    @if($reg->message)
+                                    <div class="info-section">
+                                        <div class="info-section-title">Additional Message</div>
+                                        <p>{{ $reg->message }}</p>
+                                    </div>
+                                    @endif
+                                    
+                                    <div class="info-section">
+                                        <div class="info-section-title">Visit Details</div>
+                                        <p><strong>Date:</strong> {{ $reg->visit_date }}</p>
+                                        <p><strong>Time:</strong> {{ $reg->visit_time }}</p>
+                                        <p><strong>Submitted:</strong> {{ $reg->created_at->format('Y-m-d H:i:s') }}</p>
+                                    </div>
+                                    
+                                    @if($reg->is_group && $reg->additionalVisitors->count() > 0)
+                                    <div class="info-section">
+                                        <div class="info-section-title">Group Members ({{ $reg->group_size }})</div>
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Name</th>
+                                                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Contact</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($reg->additionalVisitors as $visitor)
+                                                <tr>
+                                                    <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $visitor->name }}</td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $visitor->contact_number ?: '-' }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @endif
+                                    
+                                    @if($reg->has_vehicle && $reg->vehicles->count() > 0)
+                                    <div class="info-section">
+                                        <div class="info-section-title">Vehicles</div>
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Type</th>
+                                                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Plate</th>
+                                                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Color</th>
+                                                    <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Model</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($reg->vehicles as $vehicle)
+                                                <tr>
+                                                    <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->type ?: '-' }}</td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->plate_number }}</td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->color ?: '-' }}</td>
+                                                    <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->model ?: '-' }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     @endif
                                 </div>
-                                
-                                @if($reg->message)
-                                <div class="info-section">
-                                    <div class="info-section-title">Additional Message</div>
-                                    <p>{{ $reg->message }}</p>
-                                </div>
-                                @endif
-                                
-                                <div class="info-section">
-                                    <div class="info-section-title">Visit Details</div>
-                                    <p><strong>Date:</strong> {{ $reg->visit_date }}</p>
-                                    <p><strong>Time:</strong> {{ $reg->visit_time }}</p>
-                                    <p><strong>Submitted:</strong> {{ $reg->created_at->format('Y-m-d H:i:s') }}</p>
-                                </div>
-                                
-                                @if($reg->is_group && $reg->additionalVisitors->count() > 0)
-                                <div class="info-section">
-                                    <div class="info-section-title">Group Members ({{ $reg->group_size }})</div>
-                                    <table style="width: 100%; border-collapse: collapse;">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Name</th>
-                                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Contact</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($reg->additionalVisitors as $visitor)
-                                            <tr>
-                                                <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $visitor->name }}</td>
-                                                <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $visitor->contact_number ?: '-' }}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                @endif
-                                
-                                @if($reg->has_vehicle && $reg->vehicles->count() > 0)
-                                <div class="info-section">
-                                    <div class="info-section-title">Vehicles</div>
-                                    <table style="width: 100%; border-collapse: collapse;">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Type</th>
-                                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Plate</th>
-                                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Color</th>
-                                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Model</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($reg->vehicles as $vehicle)
-                                            <tr>
-                                                <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->type ?: '-' }}</td>
-                                                <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->plate_number }}</td>
-                                                <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->color ?: '-' }}</td>
-                                                <td style="padding: 8px; border-bottom: 1px solid #eee;">{{ $vehicle->model ?: '-' }}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="10" style="text-align: center; padding: 24px;">No visitor registrations found.</td>
-                    </tr>
-                @endforelse
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="10" style="text-align: center; padding: 24px;">No visitor registrations found.</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
         </form>
         
         <div class="data-table-footer">
@@ -483,6 +485,19 @@ document.addEventListener('DOMContentLoaded', function() {
         prevPageBtn.disabled = true;
         nextPageBtn.disabled = true;
     });
+    
+    // Responsive table handling
+    function adjustTableForMobile() {
+        if (window.innerWidth < 768) {
+            document.querySelector('.data-table').classList.add('mobile-view');
+        } else {
+            document.querySelector('.data-table').classList.remove('mobile-view');
+        }
+    }
+    
+    // Call on load and resize
+    adjustTableForMobile();
+    window.addEventListener('resize', adjustTableForMobile);
 });
 </script>
 @endsection

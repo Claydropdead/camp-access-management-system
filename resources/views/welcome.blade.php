@@ -222,7 +222,7 @@
                     <div class="hero-buttons">
                         @if (Route::has('login'))
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="btn-large blue darken-2 waves-effect waves-light hero-btn">Go to Dashboard</a>
+                                <a href="{{ url('/admin/dashboard') }}" class="btn-large blue darken-2 waves-effect waves-light hero-btn">Go to Dashboard</a>
                             @else
                                 <a href="{{ route('login') }}" class="btn-large blue darken-2 waves-effect waves-light hero-btn">Get Started</a>
                             @endauth
@@ -374,7 +374,7 @@
                 <div class="section">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="btn-large white blue-text text-darken-3 waves-effect waves-light">Go to Dashboard</a>
+                            <a href="{{ url('/admin/dashboard') }}" class="btn-large white blue-text text-darken-3 waves-effect waves-light">Go to Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="btn-large white blue-text text-darken-3 waves-effect waves-light">Get Started</a>
                         @endauth
