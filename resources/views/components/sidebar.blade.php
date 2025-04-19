@@ -47,6 +47,40 @@
             </div>
         </div>
         
+        <!-- Personnel Management Module -->
+        <div class="nav-item-with-submenu{{ request()->is('admin/personnel*') || request()->is('personnel*') ? ' active' : '' }}">
+            <div class="nav-item-header">
+                <i class="material-icons">people</i>
+                <span>Personnel Management</span>
+                <i class="material-icons submenu-toggle">expand_more</i>
+            </div>
+            <div class="submenu">
+                <a href="{{ route('personnel.create') }}" class="nav-link submenu-item{{ request()->is('personnel/create*') ? ' active' : '' }}">
+                    <i class="material-icons">person_add</i>
+                    <span>Add Personnel</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- RFID Card Management Module -->
+        <div class="nav-item-with-submenu{{ request()->is('rfidcards*') ? ' active' : '' }}">
+            <div class="nav-item-header">
+                <i class="material-icons">credit_card</i>
+                <span>RFID Cards</span>
+                <i class="material-icons submenu-toggle">expand_more</i>
+            </div>
+            <div class="submenu">
+                <a href="{{ route('rfidcards.create') }}" class="nav-link submenu-item{{ request()->is('rfidcards/create*') ? ' active' : '' }}">
+                    <i class="material-icons">add_card</i>
+                    <span>Register Card</span>
+                </a>
+                <a href="{{ route('rfidcards.index') }}" class="nav-link submenu-item{{ request()->is('rfidcards') ? ' active' : '' }}">
+                    <i class="material-icons">credit_card</i>
+                    <span>Manage Cards</span>
+                </a>
+            </div>
+        </div>
+        
         <a href="#reports" class="nav-link">
             <i class="material-icons">assessment</i>
             <span>Reports</span>

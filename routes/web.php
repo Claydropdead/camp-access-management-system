@@ -20,6 +20,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/visitors', [BookingController::class, 'adminIndex'])->name('admin.visitors');
     Route::post('/admin/visitors/{id}/action', [BookingController::class, 'adminAction'])->name('admin.visitors.action');
     Route::post('/admin/visitors/bulk-action', [BookingController::class, 'bulkAction'])->name('admin.visitors.bulk-action');
+    
+    // Personnel Management Routes
+    Route::resource('personnel', App\Http\Controllers\PersonnelController::class);
+    
+    // RFID Card Management Routes
+    Route::resource('rfidcards', App\Http\Controllers\RFIDCardController::class);
+    Route::post('rfidcards/{id}/assign', [App\Http\Controllers\RFIDCardController::class, 'assignToPersonnel'])->name('rfidcards.assign');
+    Route::post('rfidcards/{id}/unassign', [App\Http\Controllers\RFIDCardController::class, 'unassign'])->name('rfidcards.unassign');
 });
 
 Route::middleware('auth')->group(function () {
