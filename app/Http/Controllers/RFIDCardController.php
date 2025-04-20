@@ -151,4 +151,59 @@ class RFIDCardController extends Controller
         return redirect()->route('rfidcards.index')
             ->with('success', 'RFID card unassigned from ' . ($personnel ? $personnel->full_name : 'personnel'));
     }
+
+    /**
+     * Handle bulk actions on multiple RFID cards
+     */
+    public function bulkAction(Request $request)
+    {
+        $selectedIds = $request->input('selected_ids', []);
+        $action = $request->input('bulk_action');
+        
+        if (empty($selectedIds) || !in_array($action, ['activate', 'deactivate', 'delete'])) {
+            return redirect()->route('rfidcards.index')
+                ->with('error', 'Invalid action or no cards selected.');
+        }
+        
+        $count = 0;
+        
+        switch ($action) {
+            case 'activate':
+                // For cards being activated that are assigned to personnel,
+                // we need to deactivate other active cards for those personnel
+                foreach ($selectedIds as $id) {
+                    $card = RFIDCard::find($id);
+                    
+                    if ($card) {
+                        // If this card is assigned to someone, deactivate other active cards for them
+                        if ($card->personnel_id) {
+                            RFIDCard::where('personnel_id', $card->personnel_id)
+                                ->where('id', '!=', $card->id)
+                                ->where('status', 'active')
+                                ->update(['status' => 'inactive']);
+                        }
+                        
+                        $card->status = 'active';
+                        $card->save();
+                        $count++;
+                    }
+                }
+                $message = "{$count} " . ($count === 1 ? 'card' : 'cards') . " activated successfully.";
+                break;
+                
+            case 'deactivate':
+                $count = RFIDCard::whereIn('id', $selectedIds)
+                    ->update(['status' => 'inactive']);
+                $message = "{$count} " . ($count === 1 ? 'card' : 'cards') . " deactivated successfully.";
+                break;
+                
+            case 'delete':
+                $count = RFIDCard::whereIn('id', $selectedIds)->delete();
+                $message = "{$count} " . ($count === 1 ? 'card' : 'cards') . " deleted successfully.";
+                break;
+        }
+        
+        return redirect()->route('rfidcards.index')
+            ->with('success', $message);
+    }
 }

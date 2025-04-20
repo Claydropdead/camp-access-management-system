@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('rfidcards', App\Http\Controllers\RFIDCardController::class);
     Route::post('rfidcards/{id}/assign', [App\Http\Controllers\RFIDCardController::class, 'assignToPersonnel'])->name('rfidcards.assign');
     Route::post('rfidcards/{id}/unassign', [App\Http\Controllers\RFIDCardController::class, 'unassign'])->name('rfidcards.unassign');
+    Route::post('rfidcards/bulk-action', [App\Http\Controllers\RFIDCardController::class, 'bulkAction'])->name('rfidcards.bulk-action');
 });
 
 Route::middleware('auth')->group(function () {
