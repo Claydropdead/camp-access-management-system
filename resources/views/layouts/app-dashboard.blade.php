@@ -58,5 +58,8 @@
             backdrop.addEventListener('click', toggleDrawer);
         });
     </script>
+    
+    <!-- Page specific scripts -->
+    @yield('scripts')
 </body>
 </html>

@@ -161,11 +161,11 @@
 @keyframes modalOpen {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-30px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -211,14 +211,21 @@
 
 /* Form Elements */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.75rem;
+    position: relative;
+    width: 100%;
 }
 
 .form-label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 0.625rem;
     font-weight: 500;
-    color: var(--text-primary);
+    color: #333;
+    font-size: 0.9375rem;
+}
+
+[data-theme="dark"] .form-label {
+    color: #e2e8f0;
 }
 
 .form-control {
@@ -424,5 +431,1227 @@
         font-weight: 500;
         margin-right: auto;
         color: var(--primary-color);
+    }
+    
+    .rfid-cards-container {
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .card-header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .rfid-registration-card {
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .rfid-card-header {
+        padding: 1.25rem;
+    }
+    
+    .rfid-card-body {
+        padding: 1rem;
+    }
+    
+    .card-information-section {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+    
+    .rfid-form-section-title {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .rfid-input, 
+    .rfid-select {
+        font-size: 16px; /* Prevent zoom on input focus on iOS */
+        padding: 0.75rem 0.875rem;
+    }
+    
+    .scan-input-button {
+        padding: 0 1rem;
+    }
+    
+    .rfid-card-actions {
+        padding: 1rem;
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+    
+    .register-card-btn,
+    .cancel-card-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.875rem 1rem;
+    }
+    
+    /* Scanner modal mobile adjustments */
+    .rfid-scanner-content {
+        max-width: 90%;
+        margin: 0 1rem;
+    }
+    
+    .rfid-scanner-animation-container {
+        width: 100%;
+        max-width: 280px;
+        height: 160px;
+    }
+    
+    .rfid-card-placeholder {
+        width: 180px;
+        height: 110px;
+        font-size: 0.7rem;
+    }
+    
+    .rfid-card-chip {
+        width: 35px;
+        height: 25px;
+        top: 15px;
+        left: 15px;
+    }
+    
+    .rfid-scanner-footer {
+        padding: 1rem;
+    }
+}
+
+/* RFID Scanning Animation and Modal */
+.rfid-scanner-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.rfid-scanner-modal.hidden {
+    display: none;
+}
+
+.rfid-scanner-modal.flex {
+    display: flex;
+}
+
+.rfid-scanner-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.rfid-scanner-content {
+    background-color: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+}
+
+.rfid-scanner-modal.active .rfid-scanner-content {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+[data-theme="dark"] .rfid-scanner-content {
+    background-color: #2a2a2a;
+    color: #f5f5f5;
+}
+
+.rfid-scanner-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+[data-theme="dark"] .rfid-scanner-header {
+    border-bottom-color: #444;
+}
+
+.rfid-scanner-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.rfid-scanner-close {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0;
+}
+
+.rfid-scanner-close:hover {
+    color: #555;
+}
+
+[data-theme="dark"] .rfid-scanner-close:hover {
+    color: #ccc;
+}
+
+.rfid-scanner-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rfid-scanner-animation-container {
+    position: relative;
+    width: 300px;
+    height: 180px;
+    background: linear-gradient(145deg, #e6e6e6, #f5f5f5);
+    border-radius: 12px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+[data-theme="dark"] .rfid-scanner-animation-container {
+    background: linear-gradient(145deg, #333, #3a3a3a);
+}
+
+.rfid-card-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 130px;
+    background: linear-gradient(135deg, #1976d2, #0d47a1);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 0 20px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.rfid-scanner-animation-container:hover .rfid-card-placeholder {
+    transform: translate(-50%, -50%) rotateY(15deg);
+}
+
+.rfid-card-chip {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    background-color: #ffb300;
+    background: linear-gradient(145deg, #ffb300, #ffc107);
+    top: 20px;
+    left: 20px;
+    border-radius: 3px;
+}
+
+.scan-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(270deg, 
+        rgba(0, 255, 0, 0), 
+        rgba(0, 255, 0, 0.8), 
+        rgba(0, 255, 0, 0));
+    animation: none;
+    opacity: 0;
+    box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.3);
+}
+
+@keyframes scanning {
+    0% {
+        top: 0;
+        opacity: 0.9;
+    }
+    100% {
+        top: 100%;
+        opacity: 0.4;
+    }
+}
+
+.scan-animation.active {
+    animation: scanning 1.2s ease-in-out infinite;
+    opacity: 1;
+}
+
+.scanner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scanner-overlay.scanning {
+    background-color: rgba(0, 255, 0, 0.05);
+}
+
+.scanner-overlay.success {
+    background-color: rgba(0, 255, 0, 0.15);
+}
+
+.scanner-overlay.success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(0, 255, 0, 0.3) 0%, transparent 70%);
+    border-radius: 8px;
+    animation: successPulse 1.5s ease-out;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+.loading-animation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.loading-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    animation: advancedLoadingDot 1.8s infinite ease-in-out both;
+}
+
+.loading-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes advancedLoadingDot {
+    0% {
+        transform: scale(0);
+        background-color: rgba(33, 150, 243, 0.7);
+    }
+    50% {
+        transform: scale(1);
+        background-color: rgba(33, 150, 243, 1);
+    }
+    100% {
+        transform: scale(0);
+        background-color: rgba(33, 150, 243, 0.7);
+    }
+}
+
+.success-scan {
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.success-icon {
+    width: 54px;
+    height: 54px;
+    background: linear-gradient(145deg, #43a047, #2e7d32);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 12px rgba(46, 125, 50, 0.3);
+    animation: bounceIn 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    20% {
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+    40% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+    60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+        transform: scale3d(0.97, 0.97, 0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.success-icon i {
+    font-size: 30px;
+}
+
+.success-message {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+[data-theme="dark"] .success-message {
+    color: #f5f5f5;
+}
+
+.scanned-number {
+    font-family: monospace;
+    background-color: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+[data-theme="dark"] .scanned-number {
+    background-color: #444;
+    color: #f5f5f5;
+}
+
+.rfid-scanner-footer {
+    display: flex;
+    justify-content: center;
+    padding: 16px 24px;
+    border-top: 1px solid #eaeaea;
+}
+
+[data-theme="dark"] .rfid-scanner-footer {
+    border-top-color: #444;
+}
+
+.scanner-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scanner-button i {
+    margin-right: 6px;
+}
+
+.scanner-button:hover {
+    background-color: #0d47a1;
+}
+
+.scanner-button-secondary {
+    background-color: transparent;
+    color: #555;
+    border: 1px solid #d5d5d5;
+}
+
+[data-theme="dark"] .scanner-button-secondary {
+    color: #ddd;
+    border-color: #555;
+}
+
+.scanner-button-secondary:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+[data-theme="dark"] .scanner-button-secondary:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+/* Scanner Button for Card Input */
+.scan-button-group {
+    display: flex;
+    align-items: center;
+}
+
+.scan-input-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.scan-input-button:hover {
+    background-color: #2980b9;
+}
+
+/* Card-based Registration Form */
+.card-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.rfid-card-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.rfid-registration-card {
+    background-color: var(--surface-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.rfid-registration-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .rfid-registration-card {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .rfid-registration-card:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.rfid-card-header {
+    background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+    color: white;
+    padding: 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.rfid-card-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    transform: rotate(30deg);
+    animation: rotateGradient 15s linear infinite;
+}
+
+@keyframes rotateGradient {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.rfid-card-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+.rfid-card-icon {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    animation: pulseGlow 2s infinite;
+}
+
+.rfid-card-icon i {
+    font-size: 28px;
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+.rfid-card-body {
+    padding: 1.5rem;
+}
+
+.card-information-section {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-information-section:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .card-information-section {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .card-information-section:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.rfid-card-actions {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .rfid-card-actions {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.register-card-btn {
+    background: linear-gradient(145deg, #1976d2, #1565c0);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(21, 101, 192, 0.3);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.register-card-btn i {
+    margin-right: 0.5rem;
+}
+
+.register-card-btn:hover {
+    background: linear-gradient(145deg, #1565c0, #0d47a1);
+    box-shadow: 0 6px 14px rgba(21, 101, 192, 0.4);
+    transform: translateY(-2px);
+}
+
+.register-card-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(21, 101, 192, 0.4);
+}
+
+.register-card-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.register-card-btn:hover::after {
+    left: 100%;
+    opacity: 0.2;
+    transition: all 0.8s;
+}
+
+.cancel-card-btn {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.cancel-card-btn i {
+    margin-right: 0.5rem;
+}
+
+.cancel-card-btn:hover {
+    background-color: #f8f9fa;
+    color: #495057;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .cancel-card-btn {
+    border-color: #495057;
+    color: #adb5bd;
+}
+
+[data-theme="dark"] .cancel-card-btn:hover {
+    background-color: #343a40;
+    color: #e9ecef;
+}
+
+.scan-button-group {
+    display: flex;
+    align-items: stretch;
+}
+
+.scan-button-group .rfid-input {
+    border-radius: 6px 0 0 6px;
+    border-right: none;
+    flex-grow: 1;
+}
+
+.scan-input-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.scan-input-button:hover {
+    background-color: #1976d2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scan-input-button:active {
+    transform: translateY(1px);
+}
+
+.scan-input-button i {
+    font-size: 22px;
+}
+
+/* Form element styling - enhanced version */
+.rfid-input {
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    width: 100%;
+    transition: all 0.3s;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.rfid-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.rfid-input::placeholder {
+    color: #adb5bd;
+    opacity: 0.8;
+}
+
+[data-theme="dark"] .rfid-input {
+    background-color: #2d3748;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .rfid-input::placeholder {
+    color: #718096;
+}
+
+.form-helper-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: #6c757d;
+    line-height: 1.4;
+}
+
+[data-theme="dark"] .form-helper-text {
+    color: #a0aec0;
+}
+
+.required-field::after {
+    content: "*";
+    color: #e53e3e;
+    margin-left: 0.25rem;
+    font-size: 1rem;
+}
+
+.rfid-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .rfid-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+.rfid-notes {
+    min-height: 120px;
+    line-height: 1.5;
+    resize: vertical;
+    padding: 0.875rem 1rem; /* Match padding with other input fields */
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    display: block; /* Prevents any inline behavior */
+    max-width: 100%; /* Prevents overflow */
+}
+
+[data-theme="dark"] .rfid-notes {
+    color: #e2e8f0;
+    background-color: #2d3748;
+}
+
+/* Card information section styling */
+.rfid-form-section-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+[data-theme="dark"] .rfid-form-section-title {
+    color: #e2e8f0;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Scan button group improvements */
+.scan-button-group {
+    display: flex;
+    align-items: stretch;
+}
+
+.scan-button-group .rfid-input {
+    border-radius: 6px 0 0 6px;
+    border-right: none;
+    flex-grow: 1;
+}
+
+.scan-input-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.scan-input-button:hover {
+    background-color: #1976d2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scan-input-button:active {
+    transform: translateY(1px);
+}
+
+.scan-input-button i {
+    font-size: 22px;
+}
+
+/* Enhanced animations for RFID Cards */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(33, 150, 243, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(33, 150, 243, 0);
+    }
+}
+
+@keyframes floatCard {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Additional interactive animations and effects */
+.card-ready {
+    animation: cardReady 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardReady {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.rfid-card-placeholder.scanning {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    animation: cardScanPulse 1.5s infinite;
+}
+
+@keyframes cardScanPulse {
+    0% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.5); }
+    100% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+}
+
+.rfid-card-placeholder.success {
+    animation: cardSuccess 0.5s;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+}
+
+@keyframes cardSuccess {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.rfid-card-placeholder.receiving {
+    animation: cardFlash 0.15s;
+}
+
+@keyframes cardFlash {
+    0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
+    100% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+}
+
+/* Highlight effect for input field when scan is successful */
+.highlight-success {
+    animation: highlightSuccess 1.5s;
+}
+
+@keyframes highlightSuccess {
+    0% { background-color: rgba(76, 175, 80, 0.1); box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.5); }
+    100% { background-color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03); }
+}
+
+[data-theme="dark"] .highlight-success {
+    animation: highlightSuccessDark 1.5s;
+}
+
+@keyframes highlightSuccessDark {
+    0% { background-color: rgba(76, 175, 80, 0.2); box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.5); }
+    100% { background-color: #2d3748; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03); }
+}
+
+/* Ripple effect for buttons */
+.scan-input-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 3D hover effect for the card */
+.rfid-scanner-animation-container {
+    perspective: 1000px;
+}
+
+.rfid-card-placeholder {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Typewriter effect styling */
+.typewriter {
+    overflow: hidden;
+    border-right: 3px solid;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: rgba(33, 150, 243, 0.7) }
+}
+
+/* Desktop Card Layout */
+.desktop-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.desktop-form-layout {
+    width: 100%;
+}
+
+.desktop-card {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.primary-card {
+    margin-bottom: 2rem;
+}
+
+.desktop-card-header {
+    background: linear-gradient(135deg, var(--primary-color), #1565c0);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.desktop-card-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    transform: rotate(30deg);
+    animation: rotateGradient 15s linear infinite;
+}
+
+.desktop-card-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+.desktop-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.form-section-card {
+    background-color: #f9fafb;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .form-section-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.desktop-card-content {
+    padding: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+[data-theme="dark"] .section-title {
+    color: #e2e8f0;
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.desktop-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.25rem 1.5rem;
+    gap: 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive adjustments for the desktop layout */
+@media (max-width: 992px) {
+    .desktop-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .desktop-container {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .desktop-container {
+        padding: 1rem;
+    }
+    
+    .desktop-card-header {
+        padding: 1.25rem;
+    }
+    
+    .desktop-grid-layout {
+        padding: 1rem;
+    }
+    
+    .desktop-card-actions {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+    
+    .register-card-btn,
+    .cancel-card-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
