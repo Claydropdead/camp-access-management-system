@@ -65,6 +65,15 @@ class RFIDCardController extends Controller
     {
         $card = RFIDCard::with('personnel')->findOrFail($id);
         $personnel = Personnel::orderBy('lastname')->get();
+        
+        // Return JSON response for AJAX requests
+        if(request()->ajax()) {
+            return response()->json([
+                'card' => $card,
+                'personnel' => $personnel
+            ]);
+        }
+        
         return view('rfidcards.edit', compact('card', 'personnel'));
     }
 

@@ -41,19 +41,17 @@
 }
 
 .personnel-avatar {
-    width: 80px;
-    height: 80px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    margin: 0 auto 16px;
-    background-color: var(--primary-light);
+    background: linear-gradient(135deg, var(--primary-color), #1565c0);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 2rem;
+    font-size: 14px;
     font-weight: 500;
-    box-shadow: var(--elevation-1);
-    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .personnel-avatar img {
@@ -343,5 +341,104 @@
     
     .personnel-form-grid {
         grid-template-columns: 1fr;
+    }
+
+    .personnel-profile {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .personnel-avatar {
+        margin: 0 auto 6px;
+    }
+    
+    .contact-text {
+        max-width: none;
+    }
+}
+
+/* Personnel-specific styles */
+
+/* Personnel profile element in table */
+.personnel-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.personnel-name {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Contact information styling */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.contact-item i {
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.contact-text {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+/* Column widths */
+.th-name { width: 20%; }
+.th-office { width: 15%; }
+.th-unit { width: 15%; }
+.th-department { width: 15%; }
+.th-contact { width: 20%; }
+.th-actions { width: 15%; }
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background-color: #323232;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    min-width: 300px;
+    animation: toast-in 0.3s forwards;
+}
+
+.toast.success {
+    background-color: #43a047;
+}
+
+.toast.error {
+    background-color: #e53935;
+}
+
+@keyframes toast-in {
+    from {
+        transform: translate(-50%, 100px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
     }
 }

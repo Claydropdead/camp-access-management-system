@@ -263,6 +263,70 @@
     </div>
 </div>
 
+<!-- Edit Card Modal -->
+<div id="editCardModal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header" style="background: linear-gradient(135deg, var(--primary-color), #1565c0); color: white;">
+            <h3>Edit RFID Card</h3>
+            <span class="close-modal" id="closeEditModal" style="color: white;">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="editCardForm" method="POST">
+                @csrf
+                @method('PUT')
+                
+                <div class="form-group">
+                    <label for="edit_card_number" class="form-label">RFID Card Number <span class="text-danger">*</span></label>
+                    <div class="input-wrapper" style="width: 100%;">
+                        <input type="text" name="card_number" id="edit_card_number" class="form-control" style="width: 100%; padding: 12px; box-sizing: border-box;" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_status" class="form-label">Status <span class="text-danger">*</span></label>
+                    <div class="input-wrapper" style="width: 100%;">
+                        <select name="status" id="edit_status" class="form-control" style="width: 100%; padding: 12px; box-sizing: border-box; appearance: auto;">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="lost">Lost</option>
+                            <option value="damaged">Damaged</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_personnel_id" class="form-label">Assigned To</label>
+                    <div class="input-wrapper" style="width: 100%;">
+                        <select name="personnel_id" id="edit_personnel_id" class="form-control" style="width: 100%; padding: 12px; box-sizing: border-box; appearance: auto;">
+                            <option value="">-- Not Assigned --</option>
+                            @foreach(App\Models\Personnel::orderBy('lastname')->get() as $person)
+                                <option value="{{ $person->id }}">
+                                    {{ $person->full_name }} ({{ $person->department_subunit ?? $person->office }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <small class="form-text text-muted" style="margin-top: 6px; display: block;">
+                        <i class="material-icons" style="font-size: 14px; vertical-align: text-bottom;">info</i>
+                        If this card is active and assigned to someone, any other active cards for that person will be deactivated.
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit_notes" class="form-label">Notes</label>
+                    <div class="input-wrapper" style="width: 100%;">
+                        <textarea name="notes" id="edit_notes" class="form-control" rows="3" style="width: 100%; padding: 12px; box-sizing: border-box; resize: vertical;"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-cancel" id="cancelEdit">Cancel</button>
+            <button type="button" class="btn btn-primary" id="submitEdit">Update Card</button>
+        </div>
+    </div>
+</div>
+
 @if(session('success'))
 <div class="toast success" id="success-toast">
     <i class="material-icons">check_circle</i>
@@ -535,11 +599,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Modal functionality for assigning personnel
-    const modal = document.getElementById('assignPersonnelModal');
+    const assignModal = document.getElementById('assignPersonnelModal');
     const assignButtons = document.querySelectorAll('.assign-button');
-    const closeModal = document.querySelector('.close-modal');
-    const cancelBtn = document.getElementById('cancelAssign');
-    const submitBtn = document.getElementById('submitAssign');
+    const assignCloseModal = document.querySelector('#assignPersonnelModal .close-modal');
+    const assignCancelBtn = document.getElementById('cancelAssign');
+    const assignSubmitBtn = document.getElementById('submitAssign');
     const assignForm = document.getElementById('assignForm');
     
     // Open modal when assign button is clicked
@@ -547,22 +611,22 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const cardId = this.getAttribute('data-card-id');
             assignForm.action = `/rfidcards/${cardId}/assign`;
-            modal.style.display = 'block';
+            assignModal.style.display = 'block';
         });
     });
     
     // Close modal when X is clicked
-    closeModal.addEventListener('click', function() {
-        modal.style.display = 'none';
+    assignCloseModal.addEventListener('click', function() {
+        assignModal.style.display = 'none';
     });
     
     // Close modal when Cancel is clicked
-    cancelBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
+    assignCancelBtn.addEventListener('click', function() {
+        assignModal.style.display = 'none';
     });
     
     // Submit form when Assign is clicked
-    submitBtn.addEventListener('click', function() {
+    assignSubmitBtn.addEventListener('click', function() {
         const personnelId = document.getElementById('personnel_id').value;
         if (personnelId) {
             assignForm.submit();
@@ -571,10 +635,90 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Close modal when clicking outside of it
+    // Edit Card Modal functionality
+    const editModal = document.getElementById('editCardModal');
+    const editButtons = document.querySelectorAll('.action-button[title="Edit Card"]');
+    const editCloseModal = document.getElementById('closeEditModal');
+    const editCancelBtn = document.getElementById('cancelEdit');
+    const editSubmitBtn = document.getElementById('submitEdit');
+    const editForm = document.getElementById('editCardForm');
+    
+    // Open edit modal when edit button is clicked
+    editButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent navigation to the edit page
+            const cardRow = this.closest('tr');
+            const cardId = cardRow.querySelector('.row-checkbox').value;
+            
+            // Fetch card data via AJAX
+            fetch(`/rfidcards/${cardId}/edit`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Populate form with card data
+                editForm.action = `/rfidcards/${cardId}`;
+                document.getElementById('edit_card_number').value = data.card.card_number;
+                
+                // Set status
+                const statusSelect = document.getElementById('edit_status');
+                for (let i = 0; i < statusSelect.options.length; i++) {
+                    if (statusSelect.options[i].value === data.card.status) {
+                        statusSelect.options[i].selected = true;
+                        break;
+                    }
+                }
+                
+                // Set personnel if assigned
+                const personnelSelect = document.getElementById('edit_personnel_id');
+                for (let i = 0; i < personnelSelect.options.length; i++) {
+                    if (data.card.personnel_id && personnelSelect.options[i].value == data.card.personnel_id) {
+                        personnelSelect.options[i].selected = true;
+                        break;
+                    } else if (!data.card.personnel_id && personnelSelect.options[i].value === '') {
+                        personnelSelect.options[i].selected = true;
+                        break;
+                    }
+                }
+                
+                // Set notes
+                document.getElementById('edit_notes').value = data.card.notes || '';
+                
+                // Display the modal
+                editModal.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching card data:', error);
+                alert('Failed to load card data. Please try again.');
+            });
+        });
+    });
+    
+    // Close edit modal when X is clicked
+    editCloseModal.addEventListener('click', function() {
+        editModal.style.display = 'none';
+    });
+    
+    // Close edit modal when Cancel is clicked
+    editCancelBtn.addEventListener('click', function() {
+        editModal.style.display = 'none';
+    });
+    
+    // Submit edit form when Update is clicked
+    editSubmitBtn.addEventListener('click', function() {
+        editForm.submit();
+    });
+    
+    // Close modals when clicking outside of them
     window.addEventListener('click', function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
+        if (event.target == assignModal) {
+            assignModal.style.display = 'none';
+        }
+        if (event.target == editModal) {
+            editModal.style.display = 'none';
         }
     });
 });
