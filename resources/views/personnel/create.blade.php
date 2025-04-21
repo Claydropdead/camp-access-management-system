@@ -33,7 +33,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('personnel.store') }}" method="POST">
+            <form action="{{ route('personnel.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="desktop-grid-layout">
@@ -57,6 +57,13 @@
                                 <label for="lastname" class="form-label required-field">Last Name</label>
                                 <input type="text" name="lastname" id="lastname" class="rfid-input" 
                                        value="{{ old('lastname') }}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="rank" class="form-label">Rank</label>
+                                <input type="text" name="rank" id="rank" class="rfid-input" 
+                                       value="{{ old('rank') }}">
+                                <span class="form-helper-text">Military/Police rank or position title</span>
                             </div>
                         </div>
                     </div>
@@ -106,6 +113,24 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="desktop-card form-section-card">
+                        <div class="desktop-card-content">
+                            <h3 class="section-title">Profile Picture</h3>
+                            
+                            <div class="form-group">
+                                <label for="picture" class="form-label">Personnel Photo</label>
+                                <div class="file-upload-container">
+                                    <div class="file-preview" id="picture-preview">
+                                        <i class="material-icons">add_a_photo</i>
+                                    </div>
+                                    <input type="file" name="picture" id="picture" class="rfid-input" 
+                                           onchange="previewImage(this)">
+                                    <span class="form-helper-text">Upload a profile picture (JPEG, PNG, GIF - max 2MB)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="desktop-card-actions">
@@ -120,4 +145,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('picture-preview');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.style.backgroundImage = `url('${e.target.result}')`;
+                preview.innerHTML = '';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.style.backgroundImage = '';
+            preview.innerHTML = '<i class="material-icons">add_a_photo</i>';
+        }
+    }
+</script>
 @endsection

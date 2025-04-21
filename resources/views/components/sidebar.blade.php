@@ -59,6 +59,10 @@
                     <i class="material-icons">person_add</i>
                     <span>Add Personnel</span>
                 </a>
+                <a href="{{ route('personnel.index') }}" class="nav-link submenu-item{{ request()->is('personnel') ? ' active' : '' }}">
+                    <i class="material-icons">badge</i>
+                    <span>Manage Personnel</span>
+                </a>
             </div>
         </div>
         

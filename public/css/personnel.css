@@ -300,6 +300,54 @@
     color: var(--text-hint);
 }
 
+/* File Upload Styling */
+.file-upload-container {
+    width: 100%;
+    position: relative;
+}
+
+.file-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    border: 2px dashed #ddd;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.file-preview i {
+    font-size: 48px;
+    color: #aaa;
+}
+
+/* Fix for input widths */
+.rfid-input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 12px !important;
+    border-radius: 4px !important;
+    border: 1px solid #ddd !important;
+    font-size: 14px !important;
+}
+
+.rfid-input:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2) !important;
+    outline: none !important;
+}
+
+.form-helper-text {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .personnel-cards-grid {
@@ -440,5 +488,1012 @@
     to {
         transform: translate(-50%, 0);
         opacity: 1;
+    }
+}
+
+/* Profile section in expandable row */
+.profile-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.profile-picture-box {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 3px solid #fff;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-profile-image {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-profile-image i {
+    font-size: 64px;
+    color: #999;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.rank-display {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Info section grid layout */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.info-item p {
+    margin: 5px 0;
+}
+
+.contact-icon {
+    font-size: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-section.with-picture {
+    position: relative;
+}
+
+.details-with-picture {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.details-with-picture .info-grid {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.profile-picture-container {
+    flex-shrink: 0;
+}
+
+.personnel-name-details {
+    margin: 0 0 5px 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    .details-with-picture {
+        flex-direction: column-reverse;
+    }
+    
+    .profile-picture-container {
+        margin-bottom: 20px;
+        align-self: center;
+    }
+    
+    .details-with-picture .info-grid {
+        margin-right: 0;
+    }
+}
+
+/* Enhanced Details View */
+.expandable-content {
+    padding: 5px;
+}
+
+.info-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.info-card-header {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--primary-color), #1565c0);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.info-card-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.info-card-status {
+    display: flex;
+    align-items: center;
+}
+
+.info-card-body {
+    padding: 20px;
+}
+
+.personnel-header {
+    margin-bottom: 20px;
+}
+
+.personnel-position {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.office-badge {
+    background-color: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.separator {
+    color: #ccc;
+}
+
+/* Info tabs */
+.info-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.info-tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 2px solid transparent;
+}
+
+.info-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.info-tab:hover:not(.active) {
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+/* Tab content */
+.tab-content {
+    padding: 10px 0;
+}
+
+.info-section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.info-item label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.info-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Profile picture and actions */
+.profile-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.profile-btn.edit {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.profile-btn.view {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.profile-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* RFID Cards mini list */
+.cards-mini-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-mini-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border-left: 4px solid #ddd;
+}
+
+.card-mini-badge {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #eee;
+    color: #666;
+}
+
+.card-mini-badge.status-active {
+    background-color: #dff6e4;
+    color: #2e7d32;
+}
+
+.card-mini-badge.status-inactive {
+    background-color: #fff9e1;
+    color: #f57c00;
+}
+
+.card-mini-badge.status-lost {
+    background-color: #fee8e7;
+    color: #d32f2f;
+}
+
+.card-mini-badge.status-damaged {
+    background-color: #e8eaf6;
+    color: #3f51b5;
+}
+
+.card-mini-details {
+    flex: 1;
+}
+
+.card-mini-number {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.card-mini-status {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Personnel Detail View Styles */
+.personnel-detail-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.personnel-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.personnel-header-content .personnel-name {
+    margin: 0 0 8px 0;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.personnel-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.personnel-rank-badge {
+    background-color: #e3f2fd;
+    color: #0d47a1;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.personnel-office-badge {
+    background-color: #f0f0f0;
+    color: #424242;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.personnel-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #f0f0f0;
+    color: #424242;
+}
+
+.delete-btn {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.personnel-detail-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.personnel-info-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.personnel-info-card .card-header {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--primary-color), #1565c0);
+    color: white;
+}
+
+.personnel-info-card .card-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.personnel-info-card .card-body {
+    padding: 20px;
+}
+
+.detail-with-picture {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.detail-info {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.detail-profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 3px solid #fff;
+}
+
+.detail-profile-placeholder {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, var(--primary-color), #1565c0);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Styling for Delete Confirmation */
+.delete-warning {
+    color: #c62828;
+    font-weight: 500;
+}
+
+/* RFID Cards List */
+.rfid-cards-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.rfid-card-item {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.rfid-card-item.status-active {
+    border-left: 4px solid #2e7d32;
+}
+
+.rfid-card-item.status-inactive {
+    border-left: 4px solid #f57c00;
+}
+
+.rfid-card-item.status-lost {
+    border-left: 4px solid #d32f2f;
+}
+
+.rfid-card-item.status-damaged {
+    border-left: 4px solid #3f51b5;
+}
+
+.rfid-card-header {
+    padding: 12px;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rfid-card-number {
+    font-weight: 500;
+}
+
+.rfid-card-status {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-active .rfid-card-status {
+    color: #2e7d32;
+}
+
+.status-inactive .rfid-card-status {
+    color: #f57c00;
+}
+
+.status-lost .rfid-card-status {
+    color: #d32f2f;
+}
+
+.status-damaged .rfid-card-status {
+    color: #3f51b5;
+}
+
+.rfid-card-body {
+    padding: 12px;
+}
+
+.rfid-card-notes {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #757575;
+}
+
+.rfid-card-date {
+    font-size: 0.85rem;
+    color: #9e9e9e;
+}
+
+@media (max-width: 768px) {
+    .personnel-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .personnel-actions {
+        width: 100%;
+    }
+    
+    .action-btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .personnel-detail-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .detail-with-picture {
+        flex-direction: column-reverse;
+    }
+    
+    .profile-picture-container {
+        align-self: center;
+        margin-bottom: 20px;
+    }
+    
+    .detail-info {
+        margin-right: 0;
+    }
+}
+
+/* New Personnel Detail Hero Section */
+.personnel-detail-hero {
+    background: linear-gradient(135deg, var(--primary-color), #1565c0);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.personnel-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.personnel-hero-info h2 {
+    margin: 0 0 12px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.personnel-hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.hero-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+}
+
+.hero-badge.rank {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.hero-badge.office {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.personnel-hero-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 16px;
+}
+
+.hero-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+    color: white;
+    border: none;
+    text-decoration: none;
+}
+
+.hero-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.hero-btn.delete:hover {
+    background: rgba(244, 67, 54, 0.7);
+}
+
+.personnel-hero-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    margin-left: 24px;
+}
+
+.personnel-hero-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-profile-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 42px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Detail Cards */
+.detail-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.detail-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.detail-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.detail-card-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.detail-card-header i {
+    font-size: 22px;
+    color: var(--primary-color);
+}
+
+.detail-card-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #424242;
+}
+
+.detail-card-content {
+    padding: 16px 20px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: baseline;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-row .label {
+    flex: 0 0 35%;
+    font-size: 0.85rem;
+    color: #757575;
+    font-weight: 500;
+}
+
+.info-row .value {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #212121;
+}
+
+.info-row .value.with-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-row .value.with-icon i {
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+/* Card themes */
+.detail-card.basic-info .detail-card-header i {
+    color: #1976D2;
+}
+
+.detail-card.assignment .detail-card-header i {
+    color: #388E3C;
+}
+
+.detail-card.contact .detail-card-header i {
+    color: #D32F2F;
+}
+
+.detail-card.rfid-cards .detail-card-header i {
+    color: #7B1FA2;
+}
+
+/* RFID Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.card-item {
+    position: relative;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.card-status-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.card-item.status-active .card-status-indicator {
+    background-color: #4CAF50;
+}
+
+.card-item.status-inactive .card-status-indicator {
+    background-color: #FF9800;
+}
+
+.card-item.status-lost .card-status-indicator {
+    background-color: #F44336;
+}
+
+.card-item.status-damaged .card-status-indicator {
+    background-color: #3F51B5;
+}
+
+.card-content {
+    padding-left: 8px;
+}
+
+.card-number {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.card-status {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.status-active .card-status {
+    color: #2E7D32;
+}
+
+.status-inactive .card-status {
+    color: #E65100;
+}
+
+.status-lost .card-status {
+    color: #C62828;
+}
+
+.status-damaged .card-status {
+    color: #303F9F;
+}
+
+.card-date {
+    font-size: 0.75rem;
+    color: #757575;
+}
+
+/* Enhanced delete modal */
+.delete-warning {
+    color: #F44336;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.delete-warning i {
+    font-size: 18px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .personnel-detail-hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 24px 20px;
+    }
+    
+    .personnel-hero-content {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .personnel-hero-info {
+        margin-bottom: 16px;
+        width: 100%;
+    }
+    
+    .personnel-hero-badges {
+        justify-content: center;
+    }
+    
+    .personnel-hero-actions {
+        margin: 16px 0 0;
+    }
+    
+    .personnel-hero-picture {
+        margin: 0 0 20px;
+    }
+    
+    .detail-card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        margin-bottom: 16px;
+    }
+    
+    .info-row .label {
+        margin-bottom: 4px;
+    }
+}
+
+/* Add to the end of personnel.css file */
+
+/* Magnify Button styles */
+.magnify-button-container {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.magnify-button {
+    background-color: #1565c0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.magnify-button:hover {
+    background-color: #0d47a1;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.magnify-button.active {
+    background-color: #ff5722;
+}
+
+.magnify-button i {
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+.magnify-button span {
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .magnify-button span {
+        display: none;
+    }
+    
+    .magnify-button i {
+        margin-right: 0;
     }
 }

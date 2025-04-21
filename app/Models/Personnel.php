@@ -25,11 +25,13 @@ class Personnel extends Model
         'firstname',
         'middlename',
         'lastname',
+        'rank',
         'office',
         'unit',
         'department_subunit',
         'email',
         'contact_number',
+        'picture',
     ];
     
     /**
@@ -38,5 +40,13 @@ class Personnel extends Model
     public function getFullNameAttribute()
     {
         return $this->firstname . ' ' . ($this->middlename ? $this->middlename . ' ' : '') . $this->lastname;
+    }
+    
+    /**
+     * Get the RFID cards assigned to this personnel.
+     */
+    public function rfidCards()
+    {
+        return $this->hasMany(RFIDCard::class, 'personnel_id');
     }
 }
